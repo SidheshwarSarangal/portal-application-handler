@@ -1,5 +1,7 @@
 # Implementation Roadmap
 
+This roadmap delivers one module of the wider automated job-application platform. Completion means the module integrates safely with Nodrica, Uni Auth Runtime, candidate data and application tracking—not that it operates as a separate end-user product.
+
 ## Build order
 
 ```mermaid
@@ -25,6 +27,18 @@ flowchart LR
 | **6 Portals** | Fixture adapter, then five real adapters | Each portal passes fixtures and current manual verification |
 | **7 Nodrica** | DB/cache/session/user resolution loop | Ask once, reuse safely, no DB credentials in handler |
 | **8 Release** | CI, audits, drift signals, operational guide | Security, recovery and Windows/Linux gates pass |
+
+## System integration gate
+
+```mermaid
+flowchart LR
+    N[Nodrica contract tests] --> S[Session-runtime tests]
+    S --> P[Portal-handler tests]
+    P --> T[Tracking/result tests]
+    T --> E[Complete job-application journey]
+```
+
+The module is release-ready only after this complete journey works without leaking responsibilities across component boundaries.
 
 ## Portal rollout
 
@@ -107,4 +121,3 @@ flowchart LR
 - [ ] Distinct verified/unconfirmed/already-applied/expired outcomes
 - [ ] Prompt-injection, isolation, redirect, redaction and replay tests
 - [ ] Windows/Linux and current-portal verification
-

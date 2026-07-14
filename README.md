@@ -1,8 +1,25 @@
 # Portal Application Handler
 
-> A reusable TypeScript + Playwright worker for safely completing supported job-portal applications.
+> The portal-execution component of a larger automated job-application system.
 
 **Status:** visual architecture and implementation plan only—no runtime code yet.
+
+## Project context
+
+This is **not an independent product**. It is one module in a broader system that discovers suitable jobs, prepares application data, manages authenticated sessions, completes portal forms, asks for missing information, and tracks outcomes.
+
+```mermaid
+flowchart LR
+    J[Job discovery<br/>and matching] --> N[Nodrica<br/>orchestration]
+    D[(Candidate profile<br/>answers and files)] --> N
+    N --> A[Uni Auth Runtime<br/>login and sessions]
+    N --> H[Portal Application Handler<br/>navigate, fill, submit]
+    A --> H
+    H --> T[Application tracking<br/>result and evidence]
+    H -->|needs_input| N
+```
+
+The module remains reusable and cleanly separated, but its intended home is the complete job-application automation platform.
 
 ## How it works
 
@@ -29,6 +46,8 @@ flowchart LR
 | **Nodrica** | Orchestrate, query DB/cache, ask user and store results |
 | **Uni Auth Runtime** | Create, validate and refresh sessions |
 | **User** | CAPTCHA/OTP, sensitive answers and approvals |
+
+Together, these components create one controlled application pipeline; none of them alone represents the full system.
 
 ```mermaid
 flowchart TB

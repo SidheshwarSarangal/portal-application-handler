@@ -4,7 +4,7 @@
 
 ```mermaid
 flowchart TB
-    P[Portal Handler] --> T[Standalone TypeScript package]
+    P[Portal Handler] --> T[Modular TypeScript package]
     P --> B[Playwright isolated browser]
     P --> N[Typed needs_input to Nodrica]
     P --> C[Hybrid continuation]
@@ -15,6 +15,8 @@ flowchart TB
 | Topic | Final choice |
 | --- | --- |
 | Repository | `portal-application-handler` |
+| Product position | Internal component of the larger automated job-application system |
+| Packaging | Separately testable module with explicit integration contracts—not an independent product |
 | Database/UI/login | Owned by Nodrica and Uni Auth Runtime |
 | Resource request | Returned result; no direct DB/UI callback |
 | Continuation | Short live lease + durable replay checkpoint |
@@ -42,7 +44,19 @@ flowchart LR
 4. Manual challenges and sensitive decisions are never guessed.
 5. Submission is allowed once and independently verified.
 
+## System-level principle
+
+```mermaid
+flowchart LR
+    D[Discover] --> O[Orchestrate]
+    O --> L[Resolve login/session]
+    L --> A[Apply through portal]
+    A --> T[Track outcome]
+    A -->|missing resource| O
+```
+
+The handler owns only **Apply through portal**. Job discovery, ranking, user policy, authentication, persistent data and application tracking remain system responsibilities.
+
 ## Later—not version one
 
 `AI unknown-site adapter` · `Workday` · `Greenhouse` · `Lever` · `Wellfound` · `LinkedIn` · `direct DB integration` · `distributed browser migration`
-

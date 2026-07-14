@@ -1,5 +1,24 @@
 # Architecture
 
+## Place in the larger system
+
+```mermaid
+flowchart TB
+    S[Job sources] --> M[Discovery and matching]
+    M --> N[Nodrica flow engine]
+    P[(Candidate profile / DB)] --> N
+    F[(Resume and approved files)] --> N
+    N --> U[Uni Auth Runtime]
+    N --> H[Portal Application Handler]
+    U -->|validated session| H
+    H -->|needs_input| N
+    H -->|application outcome| R[Tracking and reporting]
+    N -->|question / manual action| X[User experience]
+    X --> N
+```
+
+Portal Application Handler is a bounded execution module inside this system. Nodrica owns the full workflow and coordinates all other components.
+
 ## System map
 
 ```mermaid
@@ -91,4 +110,3 @@ flowchart LR
 ```
 
 Every new top-level domain is re-evaluated. Trust is never inherited through a redirect.
-

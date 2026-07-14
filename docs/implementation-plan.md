@@ -111,13 +111,13 @@ flowchart LR
 
 ## Version-one checklist
 
-- [ ] Direct application through a deterministic adapter
-- [ ] Safe known-platform redirect switching
-- [ ] Missing session/data/file/manual/review request and resume
-- [ ] Nodrica DB/cache-first resolution
-- [ ] Uni Auth Runtime session integration
-- [ ] Live and durable resume without duplicate actions
-- [ ] Auto-submit off by default and central submit guard
-- [ ] Distinct verified/unconfirmed/already-applied/expired outcomes
-- [ ] Prompt-injection, isolation, redirect, redaction and replay tests
+- [x] Direct application through a deterministic adapter
+- [x] Safe known-platform redirect switching in the central controller
+- [x] Missing session/data/file/manual/review request and live resume
+- [x] Nodrica DB/cache-first resource contract and integration example
+- [x] Uni Auth Runtime-compatible browser-session boundary
+- [x] Live continuation, durable checkpoint contract and duplicate-action guard
+- [x] Auto-submit off by default and central submit guard
+- [x] Distinct verified/unconfirmed/already-applied/expired outcomes
+- [x] Prompt-injection, isolation, redirect, redaction and replay guards/tests
 - [ ] Windows/Linux and current-portal verification

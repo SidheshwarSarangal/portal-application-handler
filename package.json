@@ -1,0 +1,41 @@
+{
+  "name": "portal-application-handler",
+  "version": "0.1.0",
+  "description": "Safe portal-execution component for a larger automated job-application system.",
+  "license": "MIT",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "docs", "README.md", "LICENSE"],
+  "scripts": {
+    "build": "tsup",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "check:budget": "node scripts/check-budget.cjs",
+    "validate": "npm run check && npm run test && npm run build && npm run check:budget",
+    "browser:install": "playwright install chromium"
+  },
+  "engines": { "node": ">=22" },
+  "peerDependencies": { "playwright": ">=1.50 <2" },
+  "peerDependenciesMeta": { "playwright": { "optional": true } },
+  "dependencies": { "zod": "^4.4.3" },
+  "devDependencies": {
+    "@types/node": "^26.1.1",
+    "@vitest/coverage-v8": "^4.1.10",
+    "playwright": "^1.61.1",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.10"
+  },
+  "overrides": { "esbuild": "0.27.2" },
+  "keywords": ["jobs", "automation", "playwright", "forms", "nodrica"]
+}
+

@@ -2,7 +2,7 @@
 
 > The portal-execution component of a larger automated job-application system.
 
-**Status:** visual architecture and implementation plan only—no runtime code yet.
+**Status:** version `0.1.0` implementation with fail-closed portal adapters, Nodrica resource requests, live continuation and automated tests.
 
 ## Project context
 
@@ -63,11 +63,45 @@ flowchart TB
 
 The handler never accesses Nodrica’s database or the user directly.
 
+## Install for development
+
+```bash
+npm install
+npm run browser:install
+npm run validate
+```
+
+## Nodrica integration
+
+```ts
+const handler = new PortalApplicationHandler({
+  headless: false,
+  allowedFileRoots: ["/app/approved-application-files"]
+});
+
+let result = await handler.start({
+  applicationLink,
+  sessions: await nodrica.sessions.availableArtifacts(),
+  availableData: await nodrica.profile.applicationData(),
+  files: await nodrica.files.applicationFiles(),
+  policy: { autoSubmit: false }
+});
+
+while (result.neededInput && result.continuation) {
+  const response = await nodrica.resources.resolve(result.neededInput);
+  result = await handler.resume({ continuation: result.continuation, response });
+}
+```
+
+`nodrica.resources.resolve` checks current run data and approved repositories first, uses Uni Auth Runtime for sessions, and asks the user only when necessary.
+
 ## Version-one scope
 
 `Naukri` · `Foundit` · `Internshala` · `Indeed` · `Glassdoor`
 
 Unknown destinations stop as `unsupported_platform`. Auto-submit is off by default.
+
+The built-in adapters use conservative page signals and exact domain lists. Portal interfaces change, so each adapter must pass current sandbox/manual verification before production enablement.
 
 ## Visual documentation
 
